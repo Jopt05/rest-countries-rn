@@ -2,19 +2,27 @@ import React from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 import { colors, globalStyles } from '../theme/appTheme'
+import { useNavigation } from '@react-navigation/native';
 
-const data = [1,2,3,4,5]
+interface BorderCountriesProps {
+  countriesList: string[];
+}
 
-export const BorderCountries = () => {
+export const BorderCountries = ({ countriesList }: BorderCountriesProps) => {
 
-    const renderItem = (item: any) => (
-        <TouchableOpacity style={[
+    const navigation = useNavigation();
+  
+    const renderItem = (item: string) => (
+        <TouchableOpacity 
+          style={[
             styles.button,
             globalStyles.shortHorizontalMargin,
             globalStyles.shadowButton
-        ]}>
+          ]}
+          onPress={ () => navigation.navigate('DetailsScreen', { countryName: item }) }
+        >
             <Text style={ styles.buttonText }>
-                France
+                { item }
             </Text>
         </TouchableOpacity>
     )
@@ -31,7 +39,7 @@ export const BorderCountries = () => {
             showsHorizontalScrollIndicator={false}
             style={ styles.list }
             horizontal={ true }
-            data={ data }
+            data={ countriesList }
             renderItem={ ({ item }) =>  renderItem(item)}
             keyExtractor={ (item) => item.toString()}
         />

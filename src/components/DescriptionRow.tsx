@@ -6,11 +6,15 @@ interface DescriptionRowProps {
     title: string;
     value: string;
     isSmall: boolean;
+    hasSpace?: boolean;
 }
 
-export const DescriptionRow = ({ title, isSmall, value }: DescriptionRowProps) => {
+export const DescriptionRow = ({ title, isSmall, value, hasSpace}: DescriptionRowProps) => {
   return (
-    <View style={ styles.descRow }>
+    <View style={{
+        ...styles.descRow,
+        marginBottom: hasSpace ? 40 : 15
+    }}>
         <Text style={ isSmall ? styles.rowTitleSmall : styles.rowTitle}>
             { title }
         </Text>

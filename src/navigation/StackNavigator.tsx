@@ -5,7 +5,9 @@ import { Country } from '../interfaces/Country';
 
 export type RootStackParams = {
   HomeScreen: undefined;
-  DetailsScreen: Country;
+  DetailsScreen: {
+    countryName: string;
+  };
 }
 
 const Stack = createStackNavigator<RootStackParams>();

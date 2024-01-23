@@ -11,10 +11,9 @@ interface CountryElementProps {
     capital: string;   
     imageUri: string;
     name: string;
-    country: Country;
 }
 
-export const CountryElement = ({ name, imageUri, capital, population, region, country }: CountryElementProps) => {
+export const CountryElement = ({ name, imageUri, capital, population, region }: CountryElementProps) => {
 
     const navigator = useNavigation();
 
@@ -24,7 +23,7 @@ export const CountryElement = ({ name, imageUri, capital, population, region, co
                 styles.mainContainer,
                 globalStyles.largeHorizontalMargin
             ]}
-            onPress={ () => navigator.navigate('DetailsScreen', country) }
+            onPress={ () => navigator.navigate('DetailsScreen', { countryName: name }) }
         >
             <View style={ styles.imageContainer }>
                 <Image 

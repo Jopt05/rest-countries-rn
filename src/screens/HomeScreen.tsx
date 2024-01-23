@@ -26,7 +26,7 @@ export const HomeScreen = () => {
     if( isLoading || searchQuery != '' ) return;
     console.log("handleIncreaseLimit");
     setIsLoading(true);
-    setqueryLimit( 4 );
+    setqueryLimit( queryLimit + 5 );
   };
 
   const handleQuery = (value: string) => {
@@ -45,7 +45,7 @@ export const HomeScreen = () => {
     setIsLoading(true);
     setListOfCountries([]);
     if( value == '' ) {
-      setqueryLimit( queryLimit + 1 )
+      setqueryLimit( 4 )
     }
     setFilter(value);
   }
@@ -58,7 +58,6 @@ export const HomeScreen = () => {
         region={ country.region }
         imageUri={ country.flags.png }
         name={ country.name }
-        country={ country }
       />
     )
   }
