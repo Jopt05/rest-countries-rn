@@ -8,7 +8,7 @@ import { BorderCountries } from '../components/BorderCountry'
 import { StackScreenProps } from '@react-navigation/stack'
 import { RootStackParams } from '../navigation/StackNavigator'
 import { Country } from '../interfaces/Country';
-import { getCountryByAlpha3Code, getCountryByName } from '../utils/countriesService';
+import { getCountriesByAlpha3Code, getCountryByAlpha3Code, getCountryByName } from '../utils/countriesService';
 import  CurrencyFormater from 'currency-formatter';
 
 const countrykeys = {
@@ -35,6 +35,7 @@ export const DetailsScreen = ({ navigation, route }: DetailsScreenProps) => {
 
   useEffect(() => {
     setIsLoading(true);
+    setIsLoadingBorder(true);
     setListOfBorderCountries([]);
     getCountryByName(countryName)
       .then(response => {
@@ -44,21 +45,20 @@ export const DetailsScreen = ({ navigation, route }: DetailsScreenProps) => {
   }, [countryName])
 
   useEffect(() => {
-    setIsLoadingBorder(true);
     if( !countryInfo ) return;
     if( !countryInfo.borders ) {
       setIsLoadingBorder(false);
       return;
     };
-    for( const countryName of countryInfo.borders ) {
-      getCountryByAlpha3Code(countryName)
-        .then(response => {
-          if( response && response.name ) {
-            setListOfBorderCountries([...listOfBorderCountries, response.name]);
-            setIsLoadingBorder(false);
-          }
-        })
-    }
+    const listOfAlpha3Codes = countryInfo.borders;
+    getCountriesByAlpha3Code(listOfAlpha3Codes)
+      .then(response => {
+        if( response ) {
+          const listOfNames = response.map(country => country.name);
+          setListOfBorderCountries([...listOfNames]);
+          setIsLoadingBorder(false);
+        }
+      })
   }, [countryInfo])
 
   return (

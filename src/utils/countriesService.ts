@@ -33,6 +33,16 @@ export const getCountryByAlpha3Code = async (alphaCode = '') => {
     return promise;
 }
 
+export const getCountriesByAlpha3Code = async( alphaCodes: string[] ) => {
+    const countries = localData.filter(country => alphaCodes.includes(country.alpha3Code));
+    const promise: Promise<Country[] | undefined> = new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve(countries)
+        }, 1500);
+    })
+    return promise;
+}
+
 export const getCountriesByName = async (name = '') => {
     const listOfCountries = localData.filter(country => country.name.includes(name));
     const promise: Promise<Country[]> = new Promise((resolve, reject) => {
