@@ -21,6 +21,7 @@ export const HomeScreen = () => {
   const [queryLimit, setqueryLimit] = useState(5);
   const [filter, setFilter] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
 
   const handleIncreaseLimit = () => {
     if( isLoading || searchQuery != '' ) return;
@@ -30,22 +31,25 @@ export const HomeScreen = () => {
   };
 
   const handleQuery = (value: string) => {
+    if( isFirstLoad || filter != '') return;
     console.log("handleQuery");
     setIsLoading(true);
     setFilter('');
     setListOfCountries([]);
     if( value == '' ) {
-      setqueryLimit( 4 );
+      setqueryLimit( queryLimit + 1 );
     }
     handleChange(value, 'searchQuery');
   }
   
   const handleFilter = (value: string) => {
+    if( isFirstLoad ) return;
     console.log("handleFilter");
     setIsLoading(true);
+    handleChange('', 'searchQuery');
     setListOfCountries([]);
     if( value == '' ) {
-      setqueryLimit( 4 )
+      setqueryLimit( queryLimit + 1 );
     }
     setFilter(value);
   }
@@ -72,6 +76,7 @@ export const HomeScreen = () => {
       .then(response => {
         setListOfCountries(response);
         setIsLoading(false);
+        setIsFirstLoad(false);
       })
   }, [])
 
