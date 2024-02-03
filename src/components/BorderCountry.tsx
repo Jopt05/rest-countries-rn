@@ -16,8 +16,7 @@ export const BorderCountries = ({ countriesList }: BorderCountriesProps) => {
         <TouchableOpacity 
           style={[
             styles.button,
-            globalStyles.shortHorizontalMargin,
-            globalStyles.shadowButton
+            globalStyles.shortHorizontalMargin
           ]}
           onPress={ () => navigation.navigate('DetailsScreen', { countryName: item }) }
         >
@@ -63,7 +62,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     justifyContent: 'center',
     borderRadius: 5,
-    marginRight: 1
+    marginRight: 1,
+    borderWidth: 1,
   },
   buttonText: {
     fontSize: 20,

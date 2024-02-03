@@ -66,6 +66,7 @@ export const DetailsScreen = ({ navigation, route }: DetailsScreenProps) => {
         <Header /> 
         <ScrollView>
             <TouchableOpacity 
+              activeOpacity={0.9}
               style={[
                 styles.backButtonContainer,
                 globalStyles.shortHorizontalMargin,

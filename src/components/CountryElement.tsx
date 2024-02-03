@@ -19,6 +19,7 @@ export const CountryElement = ({ name, imageUri, capital, population, region }: 
 
     return (
         <TouchableOpacity 
+            activeOpacity={0.8}
             style={[
                 styles.mainContainer,
                 globalStyles.largeHorizontalMargin
