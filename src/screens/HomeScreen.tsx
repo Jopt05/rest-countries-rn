@@ -137,7 +137,6 @@ export const HomeScreen = () => {
 
 const styles = StyleSheet.create({
   mainContainer: {
-    flex: 1,
-    backgroundColor: colors.veryLightGray
+    flex: 1
   }
 })

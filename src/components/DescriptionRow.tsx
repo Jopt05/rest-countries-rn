@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { colors } from '../theme/appTheme';
+import { ThemeContext } from '../context/ThemeContext';
 
 interface DescriptionRowProps {
     title: string;
@@ -10,15 +11,23 @@ interface DescriptionRowProps {
 }
 
 export const DescriptionRow = ({ title, isSmall, value, hasSpace}: DescriptionRowProps) => {
+
+    const { theme } = useContext( ThemeContext )
   return (
     <View style={{
         ...styles.descRow,
         marginBottom: hasSpace ? 40 : 15
     }}>
-        <Text style={ isSmall ? styles.rowTitleSmall : styles.rowTitle}>
+        <Text style={{
+            ...isSmall ? styles.rowTitleSmall : styles.rowTitle,
+            color: theme.colors.text
+        }}>
             { title }
         </Text>
-        <Text style={ isSmall ? styles.rowTextSmall : styles.rowText }>
+        <Text style={{
+            ...isSmall ? styles.rowTextSmall : styles.rowText,
+            color: theme.colors.text
+        }}>
             { value }
         </Text>
     </View>

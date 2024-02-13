@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { StyleSheet, TextInput, View } from 'react-native'
 import { colors, globalStyles } from '../theme/appTheme'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { useDebouncedValue } from '../hooks/useDebouncedValue';
+import { ThemeContext } from '../context/ThemeContext';
 
 interface SearchInputProps {
   onDebounce: (text: string) => void;
 }
 
 export const SearchInput = ({ onDebounce }: SearchInputProps) => {
+
+  const { theme } = useContext( ThemeContext )
 
   const [text, setText] = useState('');
 
@@ -23,19 +26,24 @@ export const SearchInput = ({ onDebounce }: SearchInputProps) => {
   }
 
   return (
-    <View style={[
-      styles.inputContainer,
-      globalStyles.shortHorizontalMargin
-    ]}>
+    <View style={{
+      ...styles.inputContainer,
+      ...globalStyles.shortHorizontalMargin,
+      backgroundColor: theme.inputBackground
+    }}>
       <Icon 
         name='search-outline'
-        color={ colors.darkGray }
+        color={ theme.colors.text }
         size={ 20 }
         style={ styles.searchIcon }
       />
       <TextInput
         value={ text }
-        style={ styles.textInput }
+        style={{
+          ...styles.textInput,
+          color: theme.colors.text
+        }}
+        placeholderTextColor={theme.colors.text}
         placeholder='Search for a country...'
         onChangeText={ (value) => handleChange(value) }
       />
@@ -47,7 +55,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: 'row',
     marginTop: 30,
-    backgroundColor: colors.white,
+    // backgroundColor: colors.white,
     paddingVertical: 10,
     paddingHorizontal: 45,
     borderRadius: 5,
@@ -68,6 +76,5 @@ const styles = StyleSheet.create({
   },
   textInput: {
     flex: 1,
-    color: colors.darkBlue
   }
 })
