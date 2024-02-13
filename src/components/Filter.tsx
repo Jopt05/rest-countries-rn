@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { colors, globalStyles } from '../theme/appTheme'
 import Icon from 'react-native-vector-icons/Ionicons'
+import { ThemeContext } from '../context/ThemeContext';
 
 interface FilterProps {
     onChange: (value: string) => void;
@@ -9,6 +10,8 @@ interface FilterProps {
 }
 
 export const Filter = ({ onChange, currentValue }: FilterProps) => {
+
+    const { theme } = useContext( ThemeContext )
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -18,16 +21,22 @@ export const Filter = ({ onChange, currentValue }: FilterProps) => {
     }
 
   return (
-    <View style={[
-        styles.mainContainer,
-        globalStyles.shortHorizontalMargin
-    ]}>
+    <View style={{
+        ...styles.mainContainer,
+        ...globalStyles.shortHorizontalMargin,
+    }}>
         <TouchableOpacity
-            style={  styles.filterContainer }
+            style={{ 
+                ...styles.filterContainer,
+                backgroundColor: theme.inputBackground
+            }}
             onPress={ () => setIsOpen(!isOpen) }
         >
             <Text
-                style={ styles.filterText }
+                style={{
+                    ...styles.filterText,
+                    color: theme.colors.text
+                }}
             >
                 {
                     currentValue != ''
@@ -47,39 +56,57 @@ export const Filter = ({ onChange, currentValue }: FilterProps) => {
             transparent={true}
             visible={isOpen}
         >
-            <View style={ styles.filterModal }>
+            <View style={{
+                ...styles.filterModal,
+                backgroundColor: theme.inputBackground
+            }}>
                 <TouchableOpacity
                     onPress={ () => handleChange('Africa') }
                 >
-                    <Text style={ styles.textModal }>
+                    <Text style={{
+                        ...styles.textModal,
+                        color: theme.colors.text
+                    }}>
                         Africa
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={ () => handleChange('Americas') }
                 >
-                    <Text style={ styles.textModal }>
+                    <Text style={{
+                        ...styles.textModal,
+                        color: theme.colors.text
+                    }}>
                         Americas
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={ () => handleChange('Asia') }
                 >
-                    <Text style={ styles.textModal }>
+                    <Text style={{
+                        ...styles.textModal,
+                        color: theme.colors.text
+                    }}>
                         Asia
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={ () => handleChange('Europe') }
                 >
-                    <Text style={ styles.textModal }>
+                    <Text style={{
+                        ...styles.textModal,
+                        color: theme.colors.text
+                    }}>
                         Europe
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={ () => handleChange('Oceania') }
                 >
-                    <Text style={ styles.textModal }>
+                    <Text style={{
+                        ...styles.textModal,
+                        color: theme.colors.text
+                    }}>
                         Oceania
                     </Text>
                 </TouchableOpacity>
@@ -88,7 +115,10 @@ export const Filter = ({ onChange, currentValue }: FilterProps) => {
                         <TouchableOpacity
                             onPress={ () => handleChange('') }
                         >
-                            <Text style={ styles.textModal }>
+                            <Text style={{
+                                ...styles.textModal,
+                                color: theme.colors.text
+                            }}>
                                 None
                             </Text>
                         </TouchableOpacity>

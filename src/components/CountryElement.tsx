@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { colors, globalStyles } from '../theme/appTheme'
 import { DescriptionRow } from './DescriptionRow';
 import { Country } from '../interfaces/Country';
 import { useNavigation } from '@react-navigation/native';
+import { ThemeContext } from '../context/ThemeContext';
 
 interface CountryElementProps {
     population: string;
@@ -15,15 +16,17 @@ interface CountryElementProps {
 
 export const CountryElement = ({ name, imageUri, capital, population, region }: CountryElementProps) => {
 
+    const { theme } = useContext( ThemeContext )
+
     const navigator = useNavigation();
 
     return (
         <TouchableOpacity 
-            activeOpacity={0.8}
-            style={[
-                styles.mainContainer,
-                globalStyles.largeHorizontalMargin
-            ]}
+            style={{
+                ...styles.mainContainer,
+                ...globalStyles.largeHorizontalMargin,
+                backgroundColor: theme.inputBackground
+            }}
             onPress={ () => navigator.navigate('DetailsScreen', { countryName: name }) }
         >
             <View style={ styles.imageContainer }>
@@ -35,7 +38,10 @@ export const CountryElement = ({ name, imageUri, capital, population, region }: 
                 />
             </View>
             <View style={ styles.descContainer }>
-                <Text style={ styles.descTitle }>
+                <Text style={{
+                    ...styles.descTitle,
+                    color: theme.colors.text
+                }}>
                     { name }
                 </Text>
                 <DescriptionRow 

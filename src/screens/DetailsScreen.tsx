@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { ActivityIndicator, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { colors, globalStyles } from '../theme/appTheme'
 import { Header } from '../components/Header'
@@ -10,6 +10,7 @@ import { RootStackParams } from '../navigation/StackNavigator'
 import { Country } from '../interfaces/Country';
 import { getCountriesByAlpha3Code, getCountryByAlpha3Code, getCountryByName } from '../utils/countriesService';
 import  CurrencyFormater from 'currency-formatter';
+import { ThemeContext } from '../context/ThemeContext'
 
 const countrykeys = {
   'nativeName': 'Native Name',
@@ -25,6 +26,8 @@ const countrykeys = {
 interface DetailsScreenProps extends StackScreenProps<RootStackParams, 'DetailsScreen'> {};
 
 export const DetailsScreen = ({ navigation, route }: DetailsScreenProps) => {
+
+  const { theme } = useContext( ThemeContext );
 
   const { countryName } = route.params;
 
@@ -62,25 +65,31 @@ export const DetailsScreen = ({ navigation, route }: DetailsScreenProps) => {
   }, [countryInfo])
 
   return (
-    <View style={ styles.mainContainer }>
+    <View style={{
+      ...styles.mainContainer,
+      backgroundColor: theme.colors.background
+    }}>
         <Header /> 
         <ScrollView>
             <TouchableOpacity 
-              activeOpacity={0.9}
-              style={[
-                styles.backButtonContainer,
-                globalStyles.shortHorizontalMargin,
-                globalStyles.shadowButton
-              ]}
+              style={{
+                ...styles.backButtonContainer,
+                ...globalStyles.shortHorizontalMargin,
+                ...globalStyles.shadowButton,
+                backgroundColor: theme.inputBackground
+              }}
               onPress={ () => navigation.goBack() }
             >
                 <Icon 
                     style={ styles.icon }
                     name='arrow-back-outline'
-                    color={ colors.darkBlue }
+                    color={ theme.colors.text }
                     size={ 20 }
                 />
-                <Text style={ styles.buttonText }>
+                <Text style={{
+                  ...styles.buttonText,
+                  color: theme.colors.text
+                }}>
                     Back
                 </Text>
             </TouchableOpacity>
@@ -96,7 +105,10 @@ export const DetailsScreen = ({ navigation, route }: DetailsScreenProps) => {
                   }
                 </View>
 
-                <Text style={ styles.title }>
+                <Text style={{
+                  ...styles.title,
+                  color: theme.colors.text
+                }}>
                     { countryName }
                 </Text>
 

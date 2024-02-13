@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 import { colors, globalStyles } from '../theme/appTheme'
 import { useNavigation } from '@react-navigation/native';
+import { ThemeContext } from '../context/ThemeContext';
 
 interface BorderCountriesProps {
   countriesList: string[];
@@ -10,17 +11,24 @@ interface BorderCountriesProps {
 
 export const BorderCountries = ({ countriesList }: BorderCountriesProps) => {
 
+    const { theme } = useContext( ThemeContext );
+
     const navigation = useNavigation();
   
     const renderItem = (item: string) => (
         <TouchableOpacity 
-          style={[
-            styles.button,
-            globalStyles.shortHorizontalMargin
-          ]}
+          style={{
+            ...styles.button,
+            ...globalStyles.shortHorizontalMargin,
+            ...globalStyles.shadowButton,
+            backgroundColor: theme.inputBackground
+          }}
           onPress={ () => navigation.navigate('DetailsScreen', { countryName: item }) }
         >
-            <Text style={ styles.buttonText }>
+            <Text style={{
+              ...styles.buttonText,
+              color: theme.colors.text
+            }}>
                 { item }
             </Text>
         </TouchableOpacity>
@@ -28,7 +36,10 @@ export const BorderCountries = ({ countriesList }: BorderCountriesProps) => {
 
   return (
     <View style={ globalStyles.shortHorizontalMargin }>
-        <Text style={ styles.subtitle }>
+        <Text style={{
+          ...styles.subtitle,
+          color: theme.colors.text
+        }}>
             Border Countries
         </Text>
         <FlatList 
